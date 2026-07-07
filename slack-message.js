@@ -1,10 +1,5 @@
-if (process.env.PIPELINE_TYPE && process.env.PIPELINE_TYPE == 'nextgen-site' && !process.env.SITE_CONFIG) {
-  console.log(`Alert not sent: SITE_CONFIG is not set`);
-  process.exit(0)
-}
-
 const axios = require('axios');
-const webhookUrl = process.env.SITE_DEPLOYMENTS_SLACK_WEBHOOK_URL;
+const webhookUrl = process.env.SLACK_WEBHOOK_URL;
 
 const bitb_host="https://bitbucket.org"
 
@@ -14,7 +9,7 @@ head_text += `|Pipeline #${process.env.BITBUCKET_BUILD_NUMBER}>`;
 head_text += `: ${process.env.BITBUCKET_REPO_SLUG}:${process.env.BITBUCKET_BRANCH}`;
 head_text += ` (${process.env.BITBUCKET_DEPLOYMENT_ENVIRONMENT}) (${process.env.BITBUCKET_TRIGGERER_USERNAME}) `
 
-let text = `${head_text}\n---\nBitbucket Pipeline exit code: ${process.env.BITBUCKET_EXIT_CODE}`;
+let text = `${head_text}\n---\nPipeline exit code: ${process.env.BITBUCKET_EXIT_CODE}`;
 
 const attachments = [];
 if (process.env.POD_OUTPUT && process.env.POD_OUTPUT.trim() !== '') {
